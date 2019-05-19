@@ -1,0 +1,12 @@
+export const ACCOUNT = '/account';
+export const CAMPAIGN = '/dashboard/campaigns/:id';
+export const CAMPAIGNS = '/dashboard/campaigns';
+export const DASHBOARD = '/dashboard';
+export const FEATURES = '/features';
+export const HOME = '/';
+export const PRODUCT = '/';
+export const LOGIN = '/login';
+export const MESSAGES = '/dashboard/messages';
+export const MESSAGES_THREAD = '/dashboard/messages/:id';
+export const PRICING = '/pricing';
+export const SIGNUP = '/signup';
