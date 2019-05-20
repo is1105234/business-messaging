@@ -1,5 +1,15 @@
 // dependencies
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+
+// firebase
+import withAuthentication from '../firebase/withAuthentication';
+import withFirebase from '../firebase/withFirebase';
+
+// routes
+import {
+  DASHBOARD
+} from '../constants/routes';
 
 class SignUp extends Component {
   constructor(props) {
@@ -7,9 +17,8 @@ class SignUp extends Component {
 
     this.state = {
       email: "",
-      firstName: "",
-      lastName: "",
       password: "",
+      error: ""
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,35 +31,41 @@ class SignUp extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    this.props.firebase
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .catch((error) => {
+        this.setState({
+          email: "",
+          password: "",
+          error: this.setErrorMessage(error)
+        })
+      })
+  }
+
+  setErrorMessage(error) {
+    console.log(error)
+    switch(error.code) {
+      case "auth/email-already-in-use":
+        return "auth/email-already-in-use";
+      case "auth/invalid-email":
+        return "auth/invalid-email";
+      case "auth/weak-password":
+        return "auth/weak-password";
+      default:
+        return "auth/unknown-error"
+    }
   }
 
   render() {
+    if (this.props.currentUser) {
+      return <Redirect to={DASHBOARD}/>
+    }
+
     return (
       <div>
         <h2>Sign Up</h2>
         <form onSubmit={this.handleSubmit}>
-          <label>
-            First Name:
-            <input
-              value={this.state.email}
-              onChange={this.handleChange}
-              type="text"
-              name="firstName"
-              autoComplete="off"
-              required
-            />
-          </label>
-          <label>
-            Last Name:
-            <input
-              value={this.state.email}
-              onChange={this.handleChange}
-              type="text"
-              name="lastName"
-              autoComplete="off"
-              required
-            />
-          </label>
           <label>
             Email:
             <input
@@ -74,10 +89,11 @@ class SignUp extends Component {
             />
           </label>
           <input type="submit" value="Sign Up"></input>
+          { this.state.error && <div>{this.state.error}</div> }
         </form>
       </div>
     );
   }
 }
 
-export default SignUp;
+export default withFirebase(withAuthentication(SignUp));

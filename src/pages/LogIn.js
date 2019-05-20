@@ -1,5 +1,15 @@
 // dependencies
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+
+// firebase
+import withAuthentication from '../firebase/withAuthentication';
+import withFirebase from '../firebase/withFirebase';
+
+// routes
+import {
+  DASHBOARD
+} from '../constants/routes';
 
 class LogIn extends Component {
   constructor(props) {
@@ -7,7 +17,8 @@ class LogIn extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: ""
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -20,9 +31,39 @@ class LogIn extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    this.props.firebase
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .catch((error) => {
+        this.setState({
+          email: "",
+          password: "",
+          error: this.setErrorMessage(error)
+        })
+      })
+  }
+
+  setErrorMessage(error) {
+    console.log(error)
+    switch(error.code) {
+      case "auth/invalid-email":
+        return "auth/invalid-email";
+      case "auth/user-disabled":
+        return "auth/user-disabled";
+      case "auth/user-not-found":
+        return "auth/user-not-found";
+      case "auth/wrong-password":
+        return "auth/wrong-password";
+      default:
+        return "auth/unknown-error"
+    }
   }
 
   render() {
+    if (this.props.currentUser) {
+      return <Redirect to={DASHBOARD}/>
+    }
+
     return (
       <div>
         <h2>Log In</h2>
@@ -51,9 +92,10 @@ class LogIn extends Component {
           </label>
           <input type="submit" value="Log In"></input>
         </form>
+        { this.state.error && <div>{this.state.error}</div> }        
       </div>
     );
   }
 }
 
-export default LogIn;
+export default withFirebase(withAuthentication(LogIn));
