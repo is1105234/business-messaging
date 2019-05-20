@@ -1,6 +1,9 @@
 // dependencies
-import React from 'react';
+import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+
+// firebase
+import withAuthentication from '../../firebase/withAuthentication';
 
 // pages
 import Campaign from '../../pages/Campaign'
@@ -15,23 +18,32 @@ import DashboardNavigation from '../DashboardNavigation';
 import {
   CAMPAIGN,
   CAMPAIGNS,
+  LOGIN,
   MESSAGES,
   MESSAGES_THREAD
 } from '../../constants/routes';
 
-const Dashboard = () => (
-  <div>
-    <DashboardNavigation/>
+class Dashboard extends Component {
+  render() {
+    if (this.props.currentUser === null) {
+      return <Redirect to={LOGIN}/>
+    }
 
-    <Switch>
-      <Route path={CAMPAIGN} component={Campaign}/>
-      <Route path={CAMPAIGNS} component={Campaigns} exact={true}/>
-      <Route path={MESSAGES} component={Messages} exact={true}/>
-      <Route path={MESSAGES_THREAD} component={MessagesThread}/>
+    return (
+      <div>
+        <DashboardNavigation/>
 
-      <Redirect from="/dashboard" to="/dashboard/messages"/>
-    </Switch>
-  </div>
-)
+        <Switch>
+          <Route path={CAMPAIGN} component={Campaign}/>
+          <Route path={CAMPAIGNS} component={Campaigns} exact={true}/>
+          <Route path={MESSAGES} component={Messages} exact={true}/>
+          <Route path={MESSAGES_THREAD} component={MessagesThread}/>
 
-export default Dashboard;
+          <Redirect from="/dashboard" to="/dashboard/messages"/>
+        </Switch>
+      </div>
+    )
+  }
+}
+
+export default withAuthentication(Dashboard);
