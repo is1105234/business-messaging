@@ -1,0 +1,29 @@
+[debug] [2019-05-20T03:57:31.230Z] ----------------------------------------------------------------------
+[debug] [2019-05-20T03:57:31.233Z] Command:       /usr/local/bin/node /usr/local/bin/firebase emulators:start --only functions
+[debug] [2019-05-20T03:57:31.233Z] CLI Version:   6.10.0
+[debug] [2019-05-20T03:57:31.233Z] Platform:      darwin
+[debug] [2019-05-20T03:57:31.233Z] Node Version:  v8.12.0
+[debug] [2019-05-20T03:57:31.234Z] Time:          Sun May 19 2019 22:57:31 GMT-0500 (CDT)
+[debug] [2019-05-20T03:57:31.235Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-05-20T03:57:31.250Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-05-20T03:57:31.250Z] > authorizing via signed-in user
+[debug] [2019-05-20T03:57:31.253Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-05-20T03:57:31.253Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-05-20T03:57:31.508Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-20T03:57:31.530Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/business-messaging  
+ 
+[debug] [2019-05-20T03:57:31.826Z] <<< HTTP RESPONSE 200
+[info] i  Starting emulators: ["functions"]
+[warn] ⚠  Your functions directory does not specify a Node version.
+   - Learn more at https://firebase.google.com/docs/functions/manage-functions#set_runtime_options
+[debug] [2019-05-20T03:57:31.844Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/200129817308:getServerAppConfig  
+ 
+[debug] [2019-05-20T03:57:32.154Z] <<< HTTP RESPONSE 200
+[info] ✔  functions: Emulator started at http://localhost:5001
+[info] i  functions: Watching "/Users/isaacsanchez/Desktop/business-messaging/functions" for Cloud Functions...
+[debug] [2019-05-20T03:57:32.484Z] Functions runtime initialized.
+[debug] [2019-05-20T03:57:32.485Z] Disabled runtime features: undefined
+[warn] ⚠  The Cloud Functions emulator requires the module "firebase-functions-test" to be installed as a development dependency. To fix this, run "npm install --save-dev firebase-functions-test" in your functions directory.
+[info] i  functions: Your functions could not be parsed due to an issue with your node_modules (see above)
