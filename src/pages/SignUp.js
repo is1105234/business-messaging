@@ -34,6 +34,9 @@ class SignUp extends Component {
 
     this.props.firebase
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => {
+        this.props.firebase.sendEmailVerification()
+      })
       .catch((error) => {
         this.setState({
           email: "",

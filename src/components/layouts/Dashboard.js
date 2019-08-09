@@ -18,6 +18,8 @@ import DashboardNavigation from '../DashboardNavigation';
 import {
   CAMPAIGN,
   CAMPAIGNS,
+  EMAIL_UNVERIFIED,
+  FINISH_SIGNUP,
   LOGIN,
   MESSAGES,
   MESSAGES_THREAD
@@ -27,6 +29,14 @@ class Dashboard extends Component {
   render() {
     if (this.props.currentUser === null) {
       return <Redirect to={LOGIN}/>
+    }
+
+    if (this.props.currentUser.emailVerified === false) {
+      return <Redirect to={EMAIL_UNVERIFIED}/>
+    }
+
+    if (this.props.currentUser.signUpComplete === false) {
+      return <Redirect to={FINISH_SIGNUP}/>
     }
 
     return (
